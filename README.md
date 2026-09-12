@@ -1,1 +1,60 @@
 # base.module.options.provider.table
+
+<table>
+<tr>
+<td>
+<a href="https://github.com/Liventin/base.module">Bitrix Base Module</a>
+</td>
+</tr>
+</table>
+
+install | update
+
+```
+"require": {
+    "liventin/base.module.options.provider.table": "^1.0.0"
+}
+```
+redirect (optional)
+```
+"extra": {
+  "service-redirect": {
+    "liventin/base.module.options.provider.table": "module.name",
+  }
+}
+```
+
+## Что это
+
+View-only провайдер опции-таблицы (`type: 'table'`). Опция не сохраняет значений;
+данные для таблицы собирает вызывающий код и передаёт через параметры:
+
+```php
+$provider = $srvOptions->getProvider('table');
+
+return $provider
+    ->setColumns(['Колонка 1', 'Колонка 2', ...])
+    ->setChildColumns(['Колонка 1', ...])  // заголовки под-таблицы (если отличаются от основной)
+    ->setRows(self::collectRows())
+    ->setEmpty('Нет данных')
+    ->setExpandLabel('Клик по строке — показать вложенные строки')
+    ->getParamsToArray();
+```
+
+### Формат строки
+
+```php
+[
+    'cells' => [
+        'text',                          // простая ячейка
+        ['text' => 'Статус', 'status' => 'ok'],  // статусная ячейка: ok (зелёная) | no (красная)
+    ],
+    'highlight' => true,   // подсветить строку (например, свои обработчики модуля)
+    'children' => [        // (опционально) вложенные строки — строка становится раскрываемой:
+        [ /* та же структура, без children */ ],
+    ],
+]
+```
+
+Порядок `children` задаёт вызывающий код. Дочерние строки рендерятся с шапкой из `childColumns`
+(если не заданы — используется `columns`), так что набор колонок у под-таблицы может отличаться.

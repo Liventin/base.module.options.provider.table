@@ -1,0 +1,13 @@
+{
+  "name": "liventin/base.module.options.provider.table",
+  "type": "bitrix-d7-module",
+  "description": "Table option provider (handlers registry viewer)",
+  "license": "MIT",
+  "require": {
+    "php": ">=8.1",
+    "liventin/base.module": "^1.0.0"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-latest"
+  }
+}
