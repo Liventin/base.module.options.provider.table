@@ -227,6 +227,10 @@ class TableProvider implements OptionProvider
 (function () {
     var rows = document.querySelectorAll(".base-module-table-option-expandable");
     for (var i = 0; i < rows.length; i++) {
+        if (rows[i].getAttribute("data-toggle-bound")) {
+            continue;
+        }
+        rows[i].setAttribute("data-toggle-bound", "1");
         rows[i].addEventListener("click", function () {
             var sub = this.nextElementSibling;
             while (sub && !sub.classList.contains("base-module-table-option-sub")) {
