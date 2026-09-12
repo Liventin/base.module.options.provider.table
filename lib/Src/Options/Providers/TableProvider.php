@@ -4,25 +4,6 @@ namespace Base\Module\Src\Options\Providers;
 
 use Base\Module\Src\Options\Interface\OptionProvider;
 
-/**
- * Провайдер опции-таблицы (view-only, не хранит значений).
- *
- * Данные приходят через параметры опции (см. getParamsToArray()):
- *  - columns: array<string> — заголовки колонок;
- *  - rows: array<array> — строки таблицы:
- *      {
- *        'cells' => array<mixed>,   — значения ячеек; ячейка может быть строкой
- *                                     или массивом ['text' => ..., 'status' => 'ok'|'no'];
- *        'highlight' => bool,        — подсветить строку (например, свои обработчики модуля);
- *        'children' => array<array>, — вложенные строки той же структуры (без children):
- *                                     строка становится раскрываемой, по клику показывается
- *                                     под-таблица. Порядок children задаёт вызывающий код;
- *      }
- *  - empty: string — текст, когда rows пуст;
- *  - expandLabel: string — подсказка о раскрытии строк.
- *
- * Опция не принимает значений из формы: save() — no-op.
- */
 class TableProvider implements OptionProvider
 {
     private array $columns = [];
@@ -238,8 +219,6 @@ class TableProvider implements OptionProvider
     }
 
     /**
-     * Раскрытие под-таблицы со всеми обработчиками события по клику на строку.
-     *
      * @return string
      */
     private function renderScript(): string
