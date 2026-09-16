@@ -11,6 +11,7 @@ class TableProvider implements OptionProvider
     private array $rows = [];
     private string $empty = '';
     private string $expandLabel = '';
+    private bool $showHeader = false;
 
     public function getType(): string
     {
@@ -26,6 +27,7 @@ class TableProvider implements OptionProvider
             $childColumns = $columns;
         }
         $rows = $params['rows'] ?? $this->rows;
+        $showHeader = (bool)($params['showHeader'] ?? $this->showHeader);
 
         $colspan = max(1, count($columns));
         $childColspan = max(1, count($childColumns));
@@ -33,7 +35,7 @@ class TableProvider implements OptionProvider
         $html = '<tr>';
         $html .= '<td colspan="2">';
 
-        if (!empty($option['name'] ?? '')) {
+        if ($showHeader && !empty($option['name'] ?? '')) {
             $html .= '<div class="base-module-table-option-head">' .
                 htmlspecialcharsbx((string)$option['name']) . '</div>';
         }
@@ -146,6 +148,12 @@ class TableProvider implements OptionProvider
         return $this;
     }
 
+    public function setShowHeader(bool $showHeader): self
+    {
+        $this->showHeader = $showHeader;
+        return $this;
+    }
+
     public function getParamsToArray(): array
     {
         return [
@@ -154,6 +162,7 @@ class TableProvider implements OptionProvider
             'rows' => $this->rows,
             'empty' => $this->empty,
             'expandLabel' => $this->expandLabel,
+            'showHeader' => $this->showHeader,
         ];
     }
 
