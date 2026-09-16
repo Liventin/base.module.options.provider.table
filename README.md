@@ -38,8 +38,12 @@ return $provider
     ->setRows(self::collectRows())
     ->setEmpty('Нет данных')
     ->setExpandLabel('Клик по строке — показать вложенные строки')
+    ->setShowHeader(true)
     ->getParamsToArray();
 ```
+
+Заголовок над таблицей рендерится только при `setShowHeader(true)` (или `showHeader => true`
+в params) и непустом `name` опции. По умолчанию заголовок не выводится.
 
 ### Формат строки
 
